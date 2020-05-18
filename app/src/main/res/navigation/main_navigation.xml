@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@+id/library">
+
+    <fragment
+        android:id="@+id/library"
+        android:name="dev.bmcreations.screen.library.view.LibraryFragment"
+        android:label="screen"
+        tools:layout="@layout/fragment_library">
+        <deepLink app:uri="screen.app://library" />
+    </fragment>
+</navigation>

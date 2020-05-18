@@ -1,0 +1,2 @@
+apply from: "$rootProject.projectDir/android-library.gradle"
+apply from: "$rootProject.projectDir/shared-dependencies.gradle"

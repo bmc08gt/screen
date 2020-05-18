@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <color name="color_primary">#F5F5F5</color>
+    <color name="color_primary_variant">#C2C2C2</color>
+    <color name="color_on_primary">#000000</color>
+    <color name="color_secondary">#61D4B5</color>
+    <color name="color_secondary_variant">#61D4B5</color>
+    <color name="color_on_secondary">#000000</color>
+    <color name="color_error">#F44336</color>
+    <color name="color_on_error">#FFFFFF</color>
+    <color name="color_surface">#FAFAFA</color>
+    <color name="color_on_surface">#000000</color>
+    <color name="color_background">#FFFFFF</color>
+    <color name="color_on_background">#000000</color>
+    <color name="color_status_bar">#61D4B5</color>
+    <color name="color_toolbar">@color/color_status_bar</color>
+    <color name="color_on_toolbar">#000000</color>
+</resources>

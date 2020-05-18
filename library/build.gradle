@@ -1,0 +1,21 @@
+apply from: "$rootProject.projectDir/android-library.gradle"
+apply from: "$rootProject.projectDir/shared-dependencies.gradle"
+
+
+dependencies {
+    implementation project(':scrcast')
+    implementation project(":core")
+
+    implementation deps.dexter
+    implementation deps.lottie
+    implementation deps.watchservice_ktx
+}
+
+git {
+    implementation "https://github.com/bmc08gt/scrcast.git", {
+        name 'scrcast'
+        commit '5c916099c1abf70bdac89697f1733a763b46ef81'
+        authGroup 'github'
+        projectPath '/library'
+    }
+}

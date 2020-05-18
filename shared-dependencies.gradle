@@ -1,0 +1,16 @@
+dependencies {
+    implementation deps.kotlin.stdlib
+    implementation deps.jetpack.corektx
+    implementation deps.jetpack.appcompat
+    implementation deps.jetpack.constraintlayout
+    implementation deps.jetpack.material
+    implementation deps.jetpack.lifecycle_viewmodel_ktx
+    implementation deps.jetpack.lifecycle_livedata_ktx
+    implementation deps.jetpack.navigation_fragment
+    implementation deps.jetpack.navigation_fragment_ktx
+    implementation deps.jetpack.navigation_runtime
+    implementation deps.jetpack.navigation_ui
+    implementation deps.jetpack.navigation_ui_ktx
+    implementation deps.event_emitter
+    implementation deps.anko.anko
+}

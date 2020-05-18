@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel>
+      <module name="library.screen.scrcast" target="1.7" />
+      <module name="scrcast.app" target="1.8" />
+      <module name="scrcast.library" target="1.7" />
+      <module name="screen.app" target="1.8" />
+      <module name="screen.base-ui" target="1.7" />
+      <module name="screen.core" target="1.7" />
+      <module name="screen.library" target="1.7" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
