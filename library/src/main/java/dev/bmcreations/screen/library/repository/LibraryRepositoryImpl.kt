@@ -10,11 +10,19 @@ class LibraryRepositoryImpl(
 
     private var watcher : FileWatcher? = null
 
+    private var watching = false
+
     override fun getRecordedFiles(callback: (List<File>) -> Unit) {
-        watcher = directory?.watch { callback(it) }
+        watching = true
+        watcher = directory?.watch {
+            if (watching) {
+                callback(it)
+            }
+        }
     }
 
     override fun closeWatcher() {
+        watching = false
         watcher?.close()
     }
 }

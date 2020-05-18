@@ -9,6 +9,8 @@ dependencies {
     implementation deps.dexter
     implementation deps.lottie
     implementation deps.watchservice_ktx
+    implementation deps.coil
+    implementation deps.coil_video
 }
 
 git {

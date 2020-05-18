@@ -39,15 +39,12 @@ class FileWatcher(private val directory: File) : AutoCloseable, CoroutineScope b
                 val (kind, file) = event.kind to event.file
 
                 if (file != directory) {
-                    var updated = false
 
                     when (kind) {
                         KWatchEvent.Kind.Initialized -> {
-                            updated = true
                             files.add(file)
                         }
                         KWatchEvent.Kind.Created -> {
-                            updated = true
                             files.add(file)
                         }
                         KWatchEvent.Kind.Modified -> {
@@ -57,13 +54,10 @@ class FileWatcher(private val directory: File) : AutoCloseable, CoroutineScope b
                             }
                         }
                         KWatchEvent.Kind.Deleted -> {
-                            updated = true
                             files.remove(file)
                         }
                     }
-                    if (updated) {
-                        callback(files)
-                    }
+                    callback(files)
                 }
             }
         }

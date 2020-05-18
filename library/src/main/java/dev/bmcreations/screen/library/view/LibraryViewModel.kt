@@ -13,12 +13,12 @@ class LibraryViewModel constructor(
     override fun process(event: LibraryViewEvent) {
         when (event) {
             LibraryViewEvent.LoadFiles -> loadFiles()
-            LibraryViewEvent.CloseWatcher -> closeUseCase.invoke()
+            LibraryViewEvent.CloseWatcher -> closeUseCase()
         }
     }
 
     private fun loadFiles() {
-        watchUseCase.invoke {
+        watchUseCase {
             setState {
                 copy(files = it)
             }

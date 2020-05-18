@@ -21,6 +21,7 @@ import com.karumi.dexter.listener.multi.CompositeMultiplePermissionsListener
 import com.karumi.dexter.listener.multi.DialogOnAnyDeniedMultiplePermissionsListener
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import dev.bmcreations.scrcast.ScrCast
+import dev.bmcreations.screen.core.architecture.StateDrivenFragment
 import dev.bmcreations.screen.core.extensions.animateColorChange
 import dev.bmcreations.screen.core.extensions.colors
 import dev.bmcreations.screen.core.extensions.hide
@@ -32,7 +33,7 @@ import dev.bmcreations.screen.library.usecases.WatchFilesUseCase
 import kotlinx.android.synthetic.main.fragment_library.*
 
 
-class LibraryFragment : Fragment() {
+class LibraryFragment : StateDrivenFragment<LibraryViewState, LibraryViewEvent, LibraryViewEffect, LibraryViewModel>() {
 
     private val repository by lazy { LibraryRepositoryImpl(recorder?.outputDirectory) }
     private val viewModelFactory: LibraryViewModelFactory by lazy {
@@ -42,7 +43,7 @@ class LibraryFragment : Fragment() {
         )
     }
 
-    private val viewModel by viewModels<LibraryViewModel> { viewModelFactory }
+    override val viewModel by viewModels<LibraryViewModel> { viewModelFactory }
 
     private val recorder: ScrCast? by lazy {
         activity?.let {
@@ -82,6 +83,12 @@ class LibraryFragment : Fragment() {
             .build()
     }
 
+    private val fileAdapter by lazy {
+        LibraryFileAdapter()
+    }
+
+    override val layoutResId: Int = R.layout.fragment_library
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val callback: OnBackPressedCallback = object : OnBackPressedCallback(true) {
@@ -94,18 +101,15 @@ class LibraryFragment : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(this, callback)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_library, container, false)
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
+    override fun initView() {
         toolbar.apply {
             val appBarConfiguration = AppBarConfiguration(findNavController().graph)
             setupWithNavController(findNavController(), appBarConfiguration)
+        }
+
+        files.apply {
+            adapter = fileAdapter
+            itemAnimator = null
         }
 
         enable_perms.setOnClickListener { requestPermissions() }
@@ -113,23 +117,39 @@ class LibraryFragment : Fragment() {
         fab.setOnClickListener {
             if (recorder?.isRecording == true) {
                 recorder?.stopRecording()
+                loadFiles()
             } else {
+                closeWatcher()
                 recorder?.record()
             }
+        }
+
+        if (recorder?.hasStoragePermissions() == true) {
+            loadFiles()
         }
     }
 
     override fun onResume() {
         super.onResume()
-        if (recorder?.hasStoragePermissions() == true) {
-            loadFiles()
-        } else {
+        if (recorder?.hasStoragePermissions() != true) {
             displayPermissionRationale()
         }
     }
 
     override fun onDestroy() {
         super.onDestroy()
+        closeWatcher()
+    }
+
+    override fun renderViewState(viewState: LibraryViewState) {
+        fileAdapter.submitList(viewState.files)
+    }
+
+    override fun renderViewEffect(action: LibraryViewEffect) {
+        TODO("Not yet implemented")
+    }
+
+    private fun closeWatcher() {
         if (recorder?.hasStoragePermissions() == true) {
             viewModel.process(LibraryViewEvent.CloseWatcher)
         }
@@ -153,13 +173,5 @@ class LibraryFragment : Fragment() {
             .withPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
             .withListener(CompositeMultiplePermissionsListener(permissionListener, dialogPermissionListener))
             .check()
-    }
-
-    private fun FloatingActionButton.reflectState(recording: Boolean) {
-        setImageResource(if (recording) R.drawable.ic_stop else R.drawable.ic_camcorder)
-        animateColorChange(
-            context.colors[if (recording) R.color.color_secondary else R.color.color_error],
-            context.colors[if (recording) R.color.color_error else R.color.color_secondary]
-        )
     }
 }

@@ -10,11 +10,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import org.jetbrains.anko.support.v4.toast
 
-abstract class StateDrivenFragment<T: ViewState, E: ViewStateEvent, X: ViewStateEffect, V : BaseViewModel<T, E, X>> : Fragment() {
+abstract class StateDrivenFragment<S: ViewState, E: ViewStateEvent, X: ViewStateEffect, V : BaseViewModel<S, E, X>> : Fragment() {
 
     abstract val viewModel: V
 
-    private val viewStateObserver = Observer<T> {
+    private val viewStateObserver = Observer<S> {
         Log.d(javaClass.simpleName, "observed viewState : $it")
         renderViewState(it)
     }
@@ -50,6 +50,6 @@ abstract class StateDrivenFragment<T: ViewState, E: ViewStateEvent, X: ViewState
     open suspend fun whenStarted() = Unit
     open suspend fun whenResumed() = Unit
 
-    abstract fun renderViewState(viewState: T)
+    abstract fun renderViewState(viewState: S)
     abstract fun renderViewEffect(action: X)
 }

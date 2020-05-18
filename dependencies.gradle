@@ -40,7 +40,7 @@ versions.slidinguppanel = "3.4.0"
 versions.support = "29.0.0"
 versions.retrofit = "2.7.0"
 versions.anko = '0.10.8'
-versions.coil = '0.8.0'
+versions.coil = '0.11.0'
 versions.store = "4.0.0-alpha05"
 
 versions.firebase_auth = "17.0.0"
@@ -145,6 +145,7 @@ deps.junit = "junit:junit:$versions.junit"
 deps.expiringmap = "net.jodah:expiringmap:$versions.expiringmap"
 deps.slidinguppanel = "com.sothree.slidinguppanel:library:$versions.slidinguppanel"
 deps.coil = "io.coil-kt:coil:$versions.coil"
+deps.coil_video = "io.coil-kt:coil-video:$versions.coil"
 deps.db_debug = "com.amitshekhar.android:debug-db:1.0.6"
 deps.html_recycler = "com.github.m7mdra:HtmlRecycler:0.1.11"
 deps.observablescrolling = "com.github.ksoichiro:android-observablescrollview:1.5.0"
