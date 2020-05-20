@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
@@ -22,10 +23,7 @@ import com.karumi.dexter.listener.multi.DialogOnAnyDeniedMultiplePermissionsList
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import dev.bmcreations.scrcast.ScrCast
 import dev.bmcreations.screen.core.architecture.StateDrivenFragment
-import dev.bmcreations.screen.core.extensions.animateColorChange
-import dev.bmcreations.screen.core.extensions.colors
-import dev.bmcreations.screen.core.extensions.hide
-import dev.bmcreations.screen.core.extensions.show
+import dev.bmcreations.screen.core.extensions.*
 import dev.bmcreations.screen.library.R
 import dev.bmcreations.screen.library.repository.LibraryRepositoryImpl
 import dev.bmcreations.screen.library.usecases.CloseFileWatcherUseCase
@@ -48,8 +46,22 @@ class LibraryFragment : StateDrivenFragment<LibraryViewState, LibraryViewEvent, 
     private val recorder: ScrCast? by lazy {
         activity?.let {
             ScrCast.use(it).apply {
-                updateOptions {
-                    copy(directoryName = "screen")
+                options {
+                    storage {
+                        directoryName = "screen"
+                    }
+                    notification {
+                        id = 777
+                        title = "screen"
+                        description = "Recording in session..."
+                        icon = this@LibraryFragment.context?.getDrawable(R.drawable.ic_camcorder)?.toBitmap()
+                        showStop = true
+                        showTimer = true
+                        channel {
+                            id = "1337"
+                            name = "Recording Foreground Service"
+                        }
+                    }
                 }
                 setOnStateChangeListener { recording ->
                     fab.reflectState(recording)

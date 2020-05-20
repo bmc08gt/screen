@@ -16,7 +16,7 @@ dependencies {
 git {
     implementation "https://github.com/bmc08gt/scrcast.git", {
         name 'scrcast'
-        commit 'c878c32f94cd40722bbe05d6b02b8d563367c8a8'
+        commit '06ed22deeefc83203ea91630e3f8643cd7dcc6e0'
         authGroup 'github'
         projectPath '/library'
     }
